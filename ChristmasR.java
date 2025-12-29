@@ -25,7 +25,6 @@ public class ChristmasR {
         for (int q = 0; q < m; q++) {
             st = new StringTokenizer(br.readLine());
             int type = Integer.parseInt(st.nextToken());
-
             if (type == 1) {
                 int x = Integer.parseInt(st.nextToken());
                 cnt[x]++;
@@ -44,7 +43,7 @@ public class ChristmasR {
     private static int solve(int ttldeer, int[] cnt, long X) {
         long[][] dp = new long[ttldeer + 1][2];
         dp[0][1] = 1;
-        for (int s = 60; s >= 0; s--) {
+        for (int s = 62; s >= 0; s--) {
             int cntS = cnt[s];
             long[][] nextDp = new long[ttldeer + 1][2];
             for (int j = 0; j <= ttldeer; j++) {
@@ -55,10 +54,10 @@ public class ChristmasR {
                     int cmp = 0;
                     for (int k = 0; k < u; k++) {
                         int bitPos = s - j - k;
+                        int contribution = (bitPos < 0) ? 0 : 1;
                         int xBit = getBit(X, bitPos);
-                        
-                        if (1 > xBit) { cmp = 1; break; }
-                        if (1 < xBit) { cmp = -1; break; }
+                        if (contribution > xBit) { cmp = 1; break; }
+                        if (contribution < xBit) { cmp = -1; break; }
                     }
                     if (cmp == 0) {
                         int zBitPos = s - j - u;
@@ -89,6 +88,6 @@ public class ChristmasR {
     private static int getBit(long X, int pos) {
         if (pos < 0) return 0;
         if (pos > 62) return 0;
-        return (int)((X >> pos) & 1);
+        return (int) ((X >> pos) & 1);
     }
 }
